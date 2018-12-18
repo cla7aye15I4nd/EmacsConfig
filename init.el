@@ -91,7 +91,7 @@
   (linum-mode t)
   (setq file-name (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
   (set (make-local-variable 'compile-command)
-       (format "nasm -f elf64 %s.asm -o %s.o && ld -s %s.o -o %s && time ./%s"
+       (format "nasm -felf64 %s.asm -o %s.o && ld -s %s.o -o %s && time ./%s"
 	       file-name file-name file-name file-name file-name))
   (local-set-key (kbd "<C-return>") 'compile))
 (add-hook 'nasm-mode-hook 'myasm)
@@ -112,9 +112,11 @@
 	("melpa-stable" . "https://elpa.zilongshanren.com/melpa-stable/")))
 
 (add-to-list 'load-path "~/.emacs.d/elpa/auto-complete-1.5.1/")
-(global-auto-complete-mode t)
-(setq ac-quick-help-delay 0.3)
-(define-key ac-mode-map  (kbd "M-/") 'auto-complete)
+
+(ac-config-default)
+;; (global-auto-complete-mode t)
+;; (setq ac-quick-help-delay 0.05)
+;; (define-key ac-mode-map  (kbd "M-/") 'auto-complete)
 
 (load "~/.emacs.d/clang-format.el")
 (global-set-key (kbd "C-c C-f") 'clang-format-region)
