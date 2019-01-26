@@ -60,6 +60,39 @@
   (local-set-key (kbd "C-c C-k") 'kill-compilation))
 (add-hook 'c++-mode-hook 'c++-extensive)
 
+(defun c-extensive ()
+  (linum-mode t)
+  (hl-line-mode t)
+  (c-toggle-hungry-state t)
+  (setq c-basic-offset 2)
+  (setq-default indent-tabs-mode nil)
+  
+  (setq file-name (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
+  (setq code-name (file-name-nondirectory buffer-file-name))
+  (setq exec-name (format "%s" file-name))
+
+  (defun set-compile-command ()
+    (set (make-local-variable 'compile-command)
+	 (format "gcc %s -o %s && time ./%s"
+		 code-name exec-name exec-name)))
+  
+  (defun run ()
+    (interactive)
+    (compile (format "time ./%s" exec-name)))
+  
+  (defun compile-and-run ()
+    (interactive)
+    (set-compile-command)
+    (compile compile-command))
+  
+  (set-compile-command)
+  
+  (local-set-key (kbd "C-c C-r") 'run)
+  (local-set-key (kbd "<C-return>") 'compile)
+  (local-set-key (kbd "C-c C-c") 'compile-and-run)
+  (local-set-key (kbd "C-c C-k") 'kill-compilation))
+(add-hook 'c-mode-hook 'c-extensive)
+
 (defun myjava()
   (linum-mode t)
   (c-toggle-hungry-state t)
