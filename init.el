@@ -31,7 +31,7 @@
   (linum-mode t)
   (hl-line-mode t)
   (c-toggle-hungry-state t)
-  (setq c-basic-offset 2)
+  (setq c-basic-offset 4)
   (setq-default indent-tabs-mode nil)
   
   (setq file-name (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
@@ -104,10 +104,6 @@
   (local-set-key (kbd "C-c C-k") 'kill-compilation))
 (add-hook 'java-mode-hook 'myjava)
 
-(add-to-list 'custom-theme-load-path "./.emacs.d/elpa/color-theme-20080305.34")
-(add-to-list 'custom-theme-load-path "./.emacs.d/elpa/color-theme-solarized-20160626.743")
-(load-theme 'solarized t)
-
 (defun mypy()
   (linum-mode t)
   (set (make-local-variable 'compile-command)
@@ -116,6 +112,10 @@
   (local-set-key (kbd "<C-return>") 'compile)
   (local-set-key (kbd "C-c C-k") 'kill-compilation))
 (add-hook 'python-mode-hook 'mypy)
+
+(add-to-list 'custom-theme-load-path "./.emacs.d/elpa/color-theme-20080305.34")
+(add-to-list 'custom-theme-load-path "./.emacs.d/elpa/color-theme-solarized-20160626.743")
+(load-theme 'solarized t)
 
 (autoload 'nasm-mode "~/.emacs.d/nasm-mode.el" "" t)
 (add-to-list 'auto-mode-alist '("\\.\\(asm\\|s\\)$" . nasm-mode))
@@ -128,8 +128,16 @@
 	       file-name file-name file-name file-name file-name))
   (local-set-key (kbd "<C-return>") 'compile))
 (add-hook 'nasm-mode-hook 'myasm)
-  
-  
+
+(defun javascript-extension()
+  (linum-mode t)
+  (c-toggle-hungry-state t)
+  (set (make-local-variable 'compile-command)
+       (format "node %s" (file-name-nondirectory buffer-file-name)))
+  (local-set-key (kbd "<C-return>") 'compile)
+  (local-set-key (kbd "C-c C-k") 'kill-compilation))
+(add-hook 'javascript-mode-hook 'javascript-extension)
+(add-hook 'js-mode-hook 'javascript-extension)
 
 (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
 (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)
@@ -151,5 +159,52 @@
 ;; (setq ac-quick-help-delay 0.05)
 ;; (define-key ac-mode-map  (kbd "M-/") 'auto-complete)
 
+(defun oi-draw-graph (beg end region)
+  "Draw a graph through graphviz
+    Directed graph is default;
+    To draw undirected graph, add C-u prefix"
+  (interactive (list (mark) (point)
+		     (prefix-numeric-value current-prefix-arg)))
+  (let ((edge-expr (if current-prefix-arg " --" " ->"))
+        (graph-type (if current-prefix-arg "graph" "digraph")))
+    (copy-region-as-kill beg end region)
+    (with-temp-file "~/graph_temp.dot"
+      (yank)
+      (flush-lines "^[[:space:]]*$" (point-min) (point-max) t)
+      (replace-regexp "[ \t]+$" "" nil (point-min) (point-max))
+      (replace-regexp "^[ \t]+" "" nil (point-min) (point-max))
+      (goto-char (point-min))
+      (while (< (point) (point-max))
+        (move-beginning-of-line 1)
+        (insert "\"")
+        (forward-word)
+        (insert "\"")
+        (insert edge-expr)
+        (forward-word)
+        (backward-word)
+        (insert "\"")
+        (forward-word)
+        (insert "\" [label=\"")
+        (move-end-of-line 1)
+        (insert "\"];")
+        (forward-line))
+      (goto-char (point-min))
+      (open-line 2)
+      (insert (concat graph-type " tmp {"))
+      (goto-char (point-max))
+      (newline)
+      (insert "}")))
+  (shell-command "dot ~/graph_temp.dot -T png -o ~/graph_temp.png")
+  (find-file "~/graph_temp.png"))
+(global-set-key (kbd "C-c C-d") 'oi-draw-graph)
+
 (load "~/.emacs.d/clang-format.el")
 (global-set-key (kbd "C-c C-f") 'clang-format-region)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (pinyinlib company color-theme-solarized auto-complete))))
