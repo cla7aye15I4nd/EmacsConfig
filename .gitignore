@@ -4,3 +4,6 @@ auto-save-list/
 *.dat
 *~
 session*
+url/
+idlwave/
+eshell/
