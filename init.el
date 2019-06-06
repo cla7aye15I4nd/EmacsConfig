@@ -226,10 +226,9 @@
    (quote
     (pinyinlib company color-theme-solarized auto-complete))))
 
-(global-set-key [(f8)] 'loop-alpha)  ;;注意这行中的F8 , 可以改成你想要的按键  
+(global-set-key [(f8)] 'loop-alpha)
   
-(setq alpha-list '((85 55) (100 100)))  
-  
+(setq alpha-list '((85 55) (100 100)))    
 (defun loop-alpha ()  
   (interactive)  
   (let ((h (car alpha-list)))                  
