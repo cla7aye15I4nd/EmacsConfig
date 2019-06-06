@@ -9,6 +9,14 @@
 (scroll-bar-mode 0)
 (show-paren-mode t)
 
+(prefer-coding-system 'cp950)
+(prefer-coding-system 'gb2312)
+(prefer-coding-system 'cp936)
+(prefer-coding-system 'gb18030)
+(prefer-coding-system 'utf-16)
+(prefer-coding-system 'utf-8-dos)
+(prefer-coding-system 'utf-8-unix)
+
 (setq inhibit-startup-message t)
 (setq linum-format "%3d  ")
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -113,6 +121,15 @@
   (local-set-key (kbd "C-c C-k") 'kill-compilation))
 (add-hook 'python-mode-hook 'mypy)
 
+(defun mysh()
+  (linum-mode t)
+  (set (make-local-variable 'compile-command)
+       (format "bash %s.sh"
+               (file-name-sans-extension (file-name-nondirectory buffer-file-name))))
+  (local-set-key (kbd "<C-return>") 'compile)
+  (local-set-key (kbd "C-c C-k") 'kill-compilation))
+(add-hook 'shell-script-mode-hook 'mysh)
+
 (add-to-list 'custom-theme-load-path "./.emacs.d/elpa/color-theme-20080305.34")
 (add-to-list 'custom-theme-load-path "./.emacs.d/elpa/color-theme-solarized-20160626.743")
 (load-theme 'solarized t)
@@ -208,3 +225,18 @@
  '(package-selected-packages
    (quote
     (pinyinlib company color-theme-solarized auto-complete))))
+
+(global-set-key [(f8)] 'loop-alpha)  ;;注意这行中的F8 , 可以改成你想要的按键  
+  
+(setq alpha-list '((85 55) (100 100)))  
+  
+(defun loop-alpha ()  
+  (interactive)  
+  (let ((h (car alpha-list)))                  
+    ((lambda (a ab)  
+       (set-frame-parameter (selected-frame) 'alpha (list a ab))  
+       (add-to-list 'default-frame-alist (cons 'alpha (list a ab)))  
+       ) (car h) (car (cdr h)))  
+    (setq alpha-list (cdr (append alpha-list (list h))))  
+    )  
+)
