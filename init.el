@@ -18,7 +18,7 @@
 (prefer-coding-system 'utf-8-unix)
 
 (setq inhibit-startup-message t)
-(setq linum-format "%3d  ")
+(setq linum-format "%3d")
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (custom-set-faces
@@ -26,7 +26,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "YaHei Consolas Hybrid" :foundry "MS  " :slant normal :weight normal :height 120 :width normal)))))
+ '(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 151 :width normal)))))
 
 (defun c++-extensive ()
   "-Wall: print most warning
@@ -222,9 +222,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(font-use-system-font t)
  '(package-selected-packages
    (quote
-    (pinyinlib company color-theme-solarized auto-complete))))
+    (pinyinlib company color-theme-solarized auto-complete)))
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
 
 (global-set-key [(f8)] 'loop-alpha)
   
@@ -238,4 +241,6 @@
        ) (car h) (car (cdr h)))  
     (setq alpha-list (cdr (append alpha-list (list h))))  
     )  
-)
+  )
+
+(setq backup-directory-alist (quote (("." . "/data/emacs-backups"))))
