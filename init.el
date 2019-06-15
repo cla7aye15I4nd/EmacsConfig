@@ -243,4 +243,4 @@
     )  
   )
 
-(setq backup-directory-alist (quote (("." . "/data/emacs-backups"))))
+(setq backup-directory-alist (quote (("." . "/data/emacs-backups")))) ;; backup
