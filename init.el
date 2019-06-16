@@ -250,6 +250,7 @@
 (require 'php-mode)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa/php-mode-1.21.4"))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
 
 (defun myphp()
   (linum-mode t)
