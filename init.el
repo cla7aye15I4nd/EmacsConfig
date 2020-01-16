@@ -216,7 +216,14 @@
   (find-file "~/graph_temp.png"))
 (global-set-key (kbd "C-c C-d") 'oi-draw-graph)
 
+(load "~/.emacs.d/flex.el")
+(load "~/.emacs.d/antlr-mode.el")
 (load "~/.emacs.d/clang-format.el")
+
+(add-to-list 'auto-mode-alist '("\\.\\(l\\)$" . flex-mode))
+(add-to-list 'auto-mode-alist '("\\.\\(g4\\)$" . antlr-mode))
+	     
+
 (global-set-key (kbd "C-c C-f") 'clang-format-region)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
