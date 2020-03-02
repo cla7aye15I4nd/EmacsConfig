@@ -253,6 +253,8 @@
 
 (setq backup-directory-alist (quote (("." . "/data/emacs-backups")))) ;; backup
 
+(load "~/.emacs.d/llvm.el")
+
 (load "~/.emacs.d/elpa/php-mode-1.21.4/php-mode-autoloads.el")
 (require 'php-mode)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa/php-mode-1.21.4"))
