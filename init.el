@@ -275,8 +275,9 @@
 
 (defun myhaskell()
   (linum-mode t)
-  (setq file-name (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
+  (setq file-name (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name)))
   (set (make-local-variable 'compile-command)
-       (format "ghc -o %s %s.hs && time ./%s" file-name, file-name, file-name))
+       (format "ghc -o %s %s.hs && time ./%s" file-name file-name file-name))
   (local-set-key (kbd "<C-return>") 'compile))
-(add-hook 'php-mode-hook 'myphp)
+(add-hook 'haskell-mode-hook 'myhaskell)
