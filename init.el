@@ -254,9 +254,9 @@
 (setq backup-directory-alist (quote (("." . "/data/emacs-backups")))) ;; backup
 
 (load "~/.emacs.d/llvm.el")
-
 (load "~/.emacs.d/elpa/php-mode-1.21.4/php-mode-autoloads.el")
 (require 'php-mode)
+
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa/php-mode-1.21.4"))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
@@ -266,5 +266,17 @@
   (setq file-name (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
   (set (make-local-variable 'compile-command)
        (format "php %s.php" file-name))
+  (local-set-key (kbd "<C-return>") 'compile))
+(add-hook 'php-mode-hook 'myphp)
+
+(add-to-list 'load-path "~/.emacs.d/haskell-mode/")
+(require 'haskell-mode)
+(add-to-list 'Info-default-directory-list "~/.emacs.d/haskell-mode/")
+
+(defun myhaskell()
+  (linum-mode t)
+  (setq file-name (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
+  (set (make-local-variable 'compile-command)
+       (format "ghc -o %s %s.hs && time ./%s" file-name, file-name, file-name))
   (local-set-key (kbd "<C-return>") 'compile))
 (add-hook 'php-mode-hook 'myphp)
