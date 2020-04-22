@@ -114,7 +114,7 @@
 (defun mypy()
   (linum-mode t)
   (set (make-local-variable 'compile-command)
-       (format "time python %s.py"
+       (format "time python3 %s.py"
                (file-name-sans-extension (file-name-nondirectory buffer-file-name))))
   (local-set-key (kbd "<C-return>") 'compile)
   (local-set-key (kbd "C-c C-k") 'kill-compilation))
@@ -281,3 +281,13 @@
        (format "ghc -o %s %s.hs && time ./%s" file-name file-name file-name))
   (local-set-key (kbd "<C-return>") 'compile))
 (add-hook 'haskell-mode-hook 'myhaskell)
+
+(load "~/.emacs.d/rust-mode.el")
+(defun myrust()
+  (linum-mode t)  
+  (set (make-local-variable 'compile-command)
+       (format "cargo run"))
+  (local-set-key (kbd "<C-return>") 'compile))
+(add-hook 'rust-mode-hook 'myrust)
+
+(load "~/.emacs.d/toml-mode.el")
