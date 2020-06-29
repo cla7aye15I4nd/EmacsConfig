@@ -287,7 +287,8 @@
   (linum-mode t)  
   (set (make-local-variable 'compile-command)
        (format "cargo run"))
-  (local-set-key (kbd "<C-return>") 'compile))
+  (local-set-key (kbd "<C-return>") 'compile)
+  (local-set-key (kbd "C-c C-k") 'kill-compilation))
 (add-hook 'rust-mode-hook 'myrust)
 
 (load "~/.emacs.d/toml-mode.el")
