@@ -291,4 +291,15 @@
   (local-set-key (kbd "C-c C-k") 'kill-compilation))
 (add-hook 'rust-mode-hook 'myrust)
 
+(load "~/.emacs.d/go-mode.el")
+(defun mygo()
+  (linum-mode t)
+  (setq origin-name (file-name-nondirectory buffer-file-name))
+  (setq file-name (file-name-sans-extension origin-name))
+  (set (make-local-variable 'compile-command)
+       (format "go build %s && time ./%s" origin-name file-name))
+  (local-set-key (kbd "<C-return>") 'compile)
+  (local-set-key (kbd "C-c C-k") 'kill-compilation))
+(add-hook 'go-mode-hook 'mygo)
+
 (load "~/.emacs.d/toml-mode.el")
