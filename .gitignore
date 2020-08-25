@@ -8,3 +8,8 @@ url/
 idlwave/
 eshell/
 elpa/archives
+*.kbx
+*.db
+*.gpg
+elpa/gnupg/pubring.kbx
+elpa/gnupg/trustdb.gpg
