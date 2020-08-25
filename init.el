@@ -163,13 +163,8 @@
 (global-set-key [M-up] 'windmove-up)
 (global-set-key [M-down] 'windmove-down)
 
-(setq package-archives
-      '(("gnu" . "https://elpa.zilongshanren.com/gnu/")
-	;;("melpa" . "https://elpa.zilongshanren.com/melpa/")
-	;;("melpa-stable" . "https://elpa.zilongshanren.com/melpa-stable/")
-	("melpa" . "https://melpa.org/packages/")
-	("melpa-stable" . "https://stable.melpa.org/packages/")))
-
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'load-path "~/.emacs.d/elpa/auto-complete-1.5.1/")
 
 (ac-config-default)
@@ -284,9 +279,12 @@
 
 (load "~/.emacs.d/rust-mode.el")
 (defun myrust()
-  (linum-mode t)  
+  (linum-mode t)
+  (setq origin-name (file-name-nondirectory buffer-file-name))
+  (setq file-name (file-name-sans-extension origin-name))
+  
   (set (make-local-variable 'compile-command)
-       (format "cargo run"))
+       (format "rustc %s && time ./%s" origin-name file-name))
   (local-set-key (kbd "<C-return>") 'compile)
   (local-set-key (kbd "C-c C-k") 'kill-compilation))
 (add-hook 'rust-mode-hook 'myrust)
