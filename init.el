@@ -104,7 +104,7 @@
   (linum-mode t)
   (c-toggle-hungry-state t)
   (set (make-local-variable 'compile-command)
-       (format "javac %s.java && java %s"
+       (format "javac %s.java && time java %s"
                (file-name-sans-extension (file-name-nondirectory buffer-file-name))
 	       (file-name-sans-extension (file-name-nondirectory buffer-file-name))))
   (local-set-key (kbd "<C-return>") 'compile)
@@ -301,3 +301,24 @@
 (add-hook 'go-mode-hook 'mygo)
 
 (load "~/.emacs.d/toml-mode.el")
+
+;; scala mode
+(load "~/.emacs.d/elpa/scala-mode/scala-mode-lib.el")
+(load "~/.emacs.d/elpa/scala-mode/scala-mode-syntax.el")
+(load "~/.emacs.d/elpa/scala-mode/scala-mode-paragraph.el")
+(load "~/.emacs.d/elpa/scala-mode/scala-mode-indent.el")
+(load "~/.emacs.d/elpa/scala-mode/scala-mode-fontlock.el")
+(load "~/.emacs.d/elpa/scala-mode/scala-mode-map.el")
+(load "~/.emacs.d/elpa/scala-mode/scala-mode-imenu.el")
+(load "~/.emacs.d/elpa/scala-mode/scala-mode-prettify-symbols.el")
+(load "~/.emacs.d/elpa/scala-mode/scala-mode.el")
+(defun myscala()
+  (linum-mode t)
+  (c-toggle-hungry-state t)
+  (set (make-local-variable 'compile-command)
+       (format "scalac %s.scala && time scala %s"
+               (file-name-sans-extension (file-name-nondirectory buffer-file-name))
+	       (file-name-sans-extension (file-name-nondirectory buffer-file-name))))
+  (local-set-key (kbd "<C-return>") 'compile)
+  (local-set-key (kbd "C-c C-k") 'kill-compilation))
+(add-hook 'scala-mode-hook 'myscala)
